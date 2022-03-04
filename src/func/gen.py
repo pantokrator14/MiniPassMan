@@ -6,7 +6,7 @@ def generator():
     numero = '0123456789'
     alfanum = '*/-_()=.,'
 
-    todo = lower + upper + numero + alfanum
+    todo = lower + upper + numero + alfanum 
     largo = input("¿Qué tan larga quieres que sea la contraseña?: ")
     
     password = "".join(random.sample(todo, largo))
