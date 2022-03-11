@@ -29,7 +29,7 @@ def crear():    #Crear contraseñas
 def buscar():
     nombre = input("¿Como se llama el sitio web que busca? ")
     resultado = collection.find({"website": nombre})
-    if resultado == NULL:
+    if resultado == NULL: #Posible fuente de errores, cambiar de ser necesario
         print("Sitio web no encontrado... Intente nuevamente.")
         buscar()
     else:
