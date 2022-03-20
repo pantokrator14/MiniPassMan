@@ -1,5 +1,7 @@
 import random
 
+import bcrypt
+
 def generator():
     lower = 'abcdefghijklmnñopqrstuvwxyz'
     upper = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'
@@ -12,3 +14,9 @@ def generator():
     password = "".join(random.sample(todo, largo))
     print("tu contraseña es: " + password)
     return password
+
+def salt_password(password):
+    return bcrypt.hashpw(password, bcrypt.gensalt())
+
+def check_password(password, hashedpw):
+    return bcrypt.checkpw(password, hashedpw)

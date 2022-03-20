@@ -1,3 +1,5 @@
+from asyncio.windows_events import NULL
+from ssl import _PasswordType
 import pymongo as pym
 
 client = pym.MongoClient("mongodb+srv://minipassman-admin:password@minipassman.ouhpb.mongodb.net/name?retryWrites=true&w=majority")
