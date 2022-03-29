@@ -3,12 +3,10 @@ from nturl2path import url2pathname
 from ssl import _PasswordType
 import pymongo as pym
 
-def conectar(usuario, password):
-    url = "mongodb+srv://{usuario}:{password}@minipassman.ouhpb.mongodb.net/"
-    client = pym.MongoClient(url)
-    db = client.MiniPassMan
-    collection = db['passwords']
-    return collection
+url = "mongodb+srv://{usuario}:{password}@minipassman.ouhpb.mongodb.net/"
+client = pym.MongoClient(url)
+db = client.MiniPassMan
+collection = db['passwords']
 
 #---------------------------------------------------------
 
