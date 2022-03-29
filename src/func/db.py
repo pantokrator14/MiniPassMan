@@ -2,11 +2,15 @@ from asyncio.windows_events import NULL
 from nturl2path import url2pathname
 from ssl import _PasswordType
 import pymongo as pym
+import tabulate
+import pyperclip
 
-url = "mongodb+srv://{usuario}:{password}@minipassman.ouhpb.mongodb.net/"
-client = pym.MongoClient(url)
-db = client.MiniPassMan
-collection = db['passwords']
+def conectar(usuario, password):
+    url = f"mongodb+srv://{usuario}:{password}@minipassman.ouhpb.mongodb.net/" #La F permite usar las variables dentro de las cadenas de texto, por lo visto. Investigar...
+    client = pym.MongoClient(url)
+    db = client.MiniPassMan
+    collection = db['passwords']
+    return collection
 
 #---------------------------------------------------------
 
@@ -14,7 +18,7 @@ collection = db['passwords']
 
 #---------------------------------------------------------
 
-def crear():    #Crear contraseñas
+def crear(collection):    #Crear contraseñas
     opcion = input("1.Colocar mi propia contraseña \n2.Generar contraseña aleatoria automáticamente")
     if opcion == 1:
         sitio = input("Nombre del sitio web: ")
@@ -26,19 +30,19 @@ def crear():    #Crear contraseñas
         print("Espere mientras creamos su contraseña...")
     else:
         print("ingrese una opción valida... -.-")
-        crear()
+        crear(collection) #Confirmar si al hacer esto no pide de nuevo la variable collection, creo que saldra un error...
 
-def buscar():
+def buscar(collection):
     nombre = input("¿Como se llama el sitio web que busca? ")
     resultado = collection.find({"website": nombre})
-    if resultado == NULL: #Posible fuente de errores, cambiar de ser necesario
+    if resultado == False: #Posible fuente de errores, cambiar de ser necesario
         print("Sitio web no encontrado... Intente nuevamente.")
-        buscar()
+        buscar(collection)
     else:
         for res in resultado:
             print(res['username', 'password', 'descripcion'])
 
-def borrar():
+def borrar(collection):
     nombre = input("¿Como se llama el sitio web que busca? ")
     usuario = input("")
     resultado = collection.delete_one({"website": nombre})
