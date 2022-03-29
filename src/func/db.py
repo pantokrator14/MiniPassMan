@@ -1,10 +1,14 @@
 from asyncio.windows_events import NULL
+from nturl2path import url2pathname
 from ssl import _PasswordType
 import pymongo as pym
 
-client = pym.MongoClient("mongodb+srv://minipassman-admin:password@minipassman.ouhpb.mongodb.net/name?retryWrites=true&w=majority")
-db = client.MiniPassMan
-collection = db['passwords']
+def conectar(usuario, password):
+    url = "mongodb+srv://{usuario}:{password}@minipassman.ouhpb.mongodb.net/"
+    client = pym.MongoClient(url)
+    db = client.MiniPassMan
+    collection = db['passwords']
+    return collection
 
 #---------------------------------------------------------
 

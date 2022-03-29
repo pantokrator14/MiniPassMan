@@ -26,10 +26,11 @@ def menu():
     opcion = input('Elige tu opción: ')
 
     #Verificamos que se haya escogido la opción correcta
-    if opcion == 0:
+    if opcion == 0 or opcion > 6:
         clear()
         print('Escoge una opción valida... -.-')
-        sleep(3)
+        sleep(5)
+        clear()
         menu()
     else:
         return opcion #Si todo está bien, permite usar la opcion para escoger la siguiente pantalla
