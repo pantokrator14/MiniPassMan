@@ -15,8 +15,8 @@ def generator():
     print("tu contraseña es: " + password)
     return password
 
-def salt_password(password):
+def salt(password):
     return bcrypt.hashpw(password, bcrypt.gensalt())
 
-def check_password(password, hashedpw):
+def check(password, hashedpw):
     return bcrypt.checkpw(password, hashedpw)
