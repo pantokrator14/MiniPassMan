@@ -48,7 +48,8 @@ def consultar(collection):
     opcion = int(input('Desea:\n1.Mostrar todas las contrasenas\n2.Buscar por sitio web'))
     if opcion == 1:
         resultados = collection.find(projection={'_id':False}) #It seems to return all the values of the document except for the ID
-        print(tabulate(resultados))
+        for res in resultados:
+            print(tabulate(res))
     elif opcion ==2:
         nombre = input("¿Como se llama el sitio web que busca? ")
         resultado = collection.find({"website": nombre})
