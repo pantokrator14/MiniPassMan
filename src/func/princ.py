@@ -1,6 +1,8 @@
+from tkinter import font
 from db import crear, consultar, editar, borrar, copiar
 from gen import generator
 import pyperclip
+import text2art
 from os import system, name 
 from time import sleep
 
@@ -17,7 +19,9 @@ def clear():
 #Menu inicial del sistema
 def menu(coleccion):
     clear() #Primero limpiamos
-
+    logo = text2art("MENU", font="block")
+    print(logo)
+    print('---------------------------------------------------------------------------------------------')
     print('¿Qué quieres hacer?')
     print('1. Guardar nueva contraseña.')
     print('2. Mostrar contraseñas guardadas.')
