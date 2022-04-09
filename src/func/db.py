@@ -88,4 +88,6 @@ def borrar(collection):
 
     if resultado.acknowledged:
         print("Datos borrados con éxito!")
+    else:
+        print("ERROR. Data no encontrada.")
 
