@@ -45,31 +45,37 @@ def menu(coleccion):
             sleep(5)
             menu()
         elif opcion == 2:
+            clear()
             consultar(coleccion)
             opcion = input("Qué desea hacer ahora?\n1.Volver al menú\n2.Copiar password")
             if opcion == 1:
+                clear()
                 print("Volviendo al menú...")
                 sleep(5)
                 menu()
             elif opcion == 2:
                 copiar(coleccion)
-                print("Regresando al menu...")
+                print("Regresando al menú....")
                 sleep(5)
                 menu()
             else:
+                clear()
                 print("Opción inválida... Regresando al menú principal")
                 menu()
         elif opcion == 3:
+            clear()
             editar(coleccion)
             print("Regresando al menu...")
             sleep(5)
             menu()
         elif opcion == 4:
+            clear()
             borrar(coleccion)
             print("Regresando al menu...")
             sleep(5)
             menu()
         elif opcion == 5:
+            clear()
             password = generator()
             pyperclip.copy(password)
             print('Password copiado en el portapapeles.')
@@ -77,5 +83,6 @@ def menu(coleccion):
             sleep(5)
             menu()
         elif opcion == 6:
+            clear()
             print('Saliendo del programa...')
             exit(5) #Si todo está bien, permite usar la opcion para escoger la siguiente pantalla
