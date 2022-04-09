@@ -19,7 +19,7 @@ def menu():
     print('¿Qué quieres hacer?')
     print('1. Guardar nueva contraseña.')
     print('2. Mostrar contraseñas guardadas.')
-    print('3. Modificar contraseña')
+    print('3. Modificar datos')
     print('4. Borrar contraseña.')
     print('5. Generar contraseña aleatoriamente')
     print('6. Salir')
