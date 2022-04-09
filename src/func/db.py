@@ -9,7 +9,7 @@ from gen import generator
 
 #Change the url based on your own mongoDB database, its the only thing you have to change.
 def conectar(usuario, password):
-    url = f"mongodb+srv://{usuario}:{password}@minipassman.ouhpb.mongodb.net/" #La F permite usar las variables dentro de las cadenas de texto, por lo visto. Investigar...
+    url = f"mongodb+srv://{usuario}:{password}@minipassman.ouhpb.mongodb.net/" # F seems to allow us to use variables on a chain.
     client = pym.MongoClient(url)
     db = client.MiniPassMan
     collection = db['passwords']
@@ -21,7 +21,7 @@ def conectar(usuario, password):
 
 #---------------------------------------------------------
 
-def crear(collection):    #Crear contraseñas
+def crear(collection):    #Create data
     opcion = input("1.Colocar mi propia contraseña \n2.Generar contraseña aleatoria automáticamente")
     if opcion == 1:
         sitio = input("Nombre del sitio web: ")
@@ -42,17 +42,17 @@ def crear(collection):    #Crear contraseñas
 
     else:
         print("ingrese una opción valida... -.-")
-        crear(collection) #Confirmar si al hacer esto no pide de nuevo la variable collection, creo que saldra un error...
+        crear(collection)
 
 def consultar(collection):
     opcion = int(input('Desea:\n1.Mostrar todas las contrasenas\n2.Buscar por sitio web'))
     if opcion == 1:
-        resultados = collection.find(projection={'_id':False}) #Se presume que esto recogera todos los campos de  las contrasenas exceptuando el id
+        resultados = collection.find(projection={'_id':False}) #It seems to return all the values of the document except for the ID
         print(tabulate(resultados))
     elif opcion ==2:
         nombre = input("¿Como se llama el sitio web que busca? ")
         resultado = collection.find({"website": nombre})
-        if resultado == False: #Posible fuente de errores, cambiar de ser necesario
+        if resultado == False: #Possible bug, change if necessary
             print("Sitio web no encontrado... Intente nuevamente.")
             consultar(collection)
         else:
