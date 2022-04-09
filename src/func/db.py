@@ -5,6 +5,8 @@ import tabulate
 import pyperclip
 from gen import generator
 
+
+#Change the url based on your own mongoDB database, its the only thing you have to change.
 def conectar(usuario, password):
     url = f"mongodb+srv://{usuario}:{password}@minipassman.ouhpb.mongodb.net/" #La F permite usar las variables dentro de las cadenas de texto, por lo visto. Investigar...
     client = pym.MongoClient(url)
