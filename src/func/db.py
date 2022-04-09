@@ -3,6 +3,7 @@ from ssl import _PasswordType
 import pymongo as pym
 import tabulate
 import pyperclip
+from getpass import getpass
 from gen import generator
 
 
@@ -25,7 +26,7 @@ def crear(collection):    #Crear contraseñas
     if opcion == 1:
         sitio = input("Nombre del sitio web: ")
         usuario = input("Ingrese nombre de usuario: ")
-        contraseña = input("Ingrese la contraseña: ")
+        contraseña = getpass("Ingrese la contraseña: ")
         nota = input("Ingrese una nota o descripción: ")
         respuesta = collection.insert_one({"website":sitio, "username":usuario, "password":contraseña, "descripcion":nota})
         print('Datos guardados bajo el ID: ',respuesta.inserted_id)
@@ -60,13 +61,31 @@ def consultar(collection):
 
 def copiar(collection):
     nombre = input('nombre de usuario: ')
-    filtro = {'usuario':nombre}
+    filtro = {'username':nombre}
     password = collection.find_one(filtro)['password']
     pyperclip.copy(password)
     print(f'Password de {nombre} guardado en el portapales!')
 
+def editar(collection):
+
+    nombre = input('nombre: ')
+    filtro = {'name':nombre}
+    newName = input("Nuevo nombre de usuario: ")
+    sitio = input('Nuevo enlace: ')
+    password = getpass('NUEVO password: ')
+    description = input("Nueva descripción: ")
+    valores = {'$set':{'password':password,'website':sitio,'username':newName, 'descripcion': description}}
+    respuesta = collection.update_one(filtro,valores)
+
+    if respuesta.acknowledged:
+        print('Datos modificados!')
+
+
 def borrar(collection):
     nombre = input("¿Como se llama el sitio web que busca? ")
     usuario = input("Ingrese el nombre de usuario respectivo: ")
-    resultado = collection.delete_one({"website": nombre, "usuario": usuario})
+    resultado = collection.delete_one({"website": nombre, "username": usuario})
+
+    if resultado.acknowledged:
+        print("Datos borrados con éxito!")
 
