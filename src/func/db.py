@@ -3,7 +3,7 @@ from ssl import _PasswordType
 import pymongo as pym
 import tabulate
 import pyperclip
-from gen import salt, check
+from gen import generator
 
 def conectar(usuario, password):
     url = f"mongodb+srv://{usuario}:{password}@minipassman.ouhpb.mongodb.net/" #La F permite usar las variables dentro de las cadenas de texto, por lo visto. Investigar...
@@ -25,9 +25,18 @@ def crear(collection):    #Crear contraseñas
         usuario = input("Ingrese nombre de usuario: ")
         contraseña = input("Ingrese la contraseña: ")
         nota = input("Ingrese una nota o descripción: ")
-        collection.insert_one({"website":sitio, "username":usuario, "password":contraseña, "descripcion":nota})
+        respuesta = collection.insert_one({"website":sitio, "username":usuario, "password":contraseña, "descripcion":nota})
+        print('Datos guardados bajo el ID: ',respuesta.inserted_id)
     elif opcion == 2:
         print("Espere mientras creamos su contraseña...")
+        password = generator()
+        print("Contraseña creada..")
+        sitio = input("Nombre del sitio web: ")
+        usuario = input("Ingrese nombre de usuario: ")
+        nota = input("Ingrese una nota o descripción: ")
+        respuesta = collection.insert_one({"website":sitio, "username":usuario, "password":password, "descripcion":nota})
+        print('Datos guardados bajo el ID: ',respuesta.inserted_id)
+
     else:
         print("ingrese una opción valida... -.-")
         crear(collection) #Confirmar si al hacer esto no pide de nuevo la variable collection, creo que saldra un error...
@@ -35,7 +44,7 @@ def crear(collection):    #Crear contraseñas
 def consultar(collection):
     opcion = int(input('Desea:\n1.Mostrar todas las contrasenas\n2.Buscar por sitio web'))
     if opcion == 1:
-        resultados = collection.find()
+        resultados = collection.find(projection={'_id':False}) #Se presume que esto recogera todos los campos de  las contrasenas exceptuando el id
         print(tabulate(resultados))
     elif opcion ==2:
         nombre = input("¿Como se llama el sitio web que busca? ")
@@ -47,8 +56,15 @@ def consultar(collection):
             for res in resultado:
                 print(tabulate(res))
 
+def copiar(collection):
+    nombre = input('nombre de usuario: ')
+    filtro = {'usuario':nombre}
+    password = collection.find_one(filtro)['password']
+    pyperclip.copy(password)
+    print(f'Password de {nombre} guardado en el portapales!')
+
 def borrar(collection):
     nombre = input("¿Como se llama el sitio web que busca? ")
-    usuario = input("")
-    resultado = collection.delete_one({"website": nombre})
+    usuario = input("Ingrese el nombre de usuario respectivo: ")
+    resultado = collection.delete_one({"website": nombre, "usuario": usuario})
 
