@@ -1,4 +1,6 @@
-import imp
+from db import crear, consultar, editar, borrar, copiar
+from gen import generator
+import pyperclip
 from os import system, name 
 from time import sleep
 
@@ -13,7 +15,7 @@ def clear():
 
 
 #Menu inicial del sistema
-def menu():
+def menu(coleccion):
     clear() #Primero limpiamos
 
     print('¿Qué quieres hacer?')
@@ -30,7 +32,46 @@ def menu():
         clear()
         print('Escoge una opción valida... -.-')
         sleep(5)
-        clear()
         menu()
     else:
-        return opcion #Si todo está bien, permite usar la opcion para escoger la siguiente pantalla
+        if opcion == 1:
+            clear()
+            crear(coleccion)
+            print("Regresando al menu...")
+            sleep(5)
+            menu()
+        elif opcion == 2:
+            consultar(coleccion)
+            opcion = input("Qué desea hacer ahora?\n1.Volver al menú\n2.Copiar password")
+            if opcion == 1:
+                print("Volviendo al menú...")
+                sleep(5)
+                menu()
+            elif opcion == 2:
+                copiar(coleccion)
+                print("Regresando al menu...")
+                sleep(5)
+                menu()
+            else:
+                print("Opción inválida... Regresando al menú principal")
+                menu()
+        elif opcion == 3:
+            editar(coleccion)
+            print("Regresando al menu...")
+            sleep(5)
+            menu()
+        elif opcion == 4:
+            borrar(coleccion)
+            print("Regresando al menu...")
+            sleep(5)
+            menu()
+        elif opcion == 5:
+            password = generator()
+            pyperclip.copy(password)
+            print('Password copiado en el portapapeles.')
+            print("Regresando al menu...")
+            sleep(5)
+            menu()
+        elif opcion == 6:
+            print('Saliendo del programa...')
+            exit(5) #Si todo está bien, permite usar la opcion para escoger la siguiente pantalla

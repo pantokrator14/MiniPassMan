@@ -38,7 +38,9 @@ def crear(collection):    #Create data
         usuario = input("Ingrese nombre de usuario: ")
         nota = input("Ingrese una nota o descripción: ")
         respuesta = collection.insert_one({"website":sitio, "username":usuario, "password":password, "descripcion":nota})
-        print('Datos guardados bajo el ID: ',respuesta.inserted_id)
+        
+        if respuesta.acknowledged:
+            print('Datos guardados bajo el ID: ',respuesta.inserted_id)
 
     else:
         print("ingrese una opción valida... -.-")
@@ -53,12 +55,12 @@ def consultar(collection):
     elif opcion ==2:
         nombre = input("¿Como se llama el sitio web que busca? ")
         resultado = collection.find({"website": nombre})
-        if resultado == False: #Possible bug, change if necessary
-            print("Sitio web no encontrado... Intente nuevamente.")
-            consultar(collection)
-        else:
+        if resultado.acknowledged: #Possible bug, change if necessary
             for res in resultado:
                 print(tabulate(res))
+        else:
+            print("Sitio web no encontrado... Intente nuevamente.")
+            consultar(collection)
 
 def copiar(collection):
     nombre = input('nombre de usuario: ')
