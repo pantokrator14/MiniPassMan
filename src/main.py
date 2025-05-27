@@ -13,4 +13,4 @@ password = input('Ingrese su contraseña: ')
 
 coleccion = conectar(usuario, password)
 
-menu()
+menu(coleccion)

@@ -36,14 +36,14 @@ def menu(coleccion):
         clear()
         print('Escoge una opción valida... -.-')
         sleep(5)
-        menu()
+        menu(coleccion)
     else:
         if opcion == 1:
             clear()
             crear(coleccion)
             print("Regresando al menu...")
             sleep(5)
-            menu()
+            menu(coleccion)
         elif opcion == 2:
             clear()
             consultar(coleccion)
@@ -52,28 +52,28 @@ def menu(coleccion):
                 clear()
                 print("Volviendo al menú...")
                 sleep(5)
-                menu()
+                menu(coleccion)
             elif opcion == 2:
                 copiar(coleccion)
                 print("Regresando al menú....")
                 sleep(5)
-                menu()
+                menu(coleccion)
             else:
                 clear()
                 print("Opción inválida... Regresando al menú principal")
-                menu()
+                menu(coleccion)
         elif opcion == 3:
             clear()
             editar(coleccion)
             print("Regresando al menu...")
             sleep(5)
-            menu()
+            menu(coleccion)
         elif opcion == 4:
             clear()
             borrar(coleccion)
             print("Regresando al menu...")
             sleep(5)
-            menu()
+            menu(coleccion)
         elif opcion == 5:
             clear()
             password = generator()
@@ -81,7 +81,7 @@ def menu(coleccion):
             print('Password copiado en el portapapeles.')
             print("Regresando al menu...")
             sleep(5)
-            menu()
+            menu(coleccion)
         elif opcion == 6:
             clear()
             print('Saliendo del programa...')
