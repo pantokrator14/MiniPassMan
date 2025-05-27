@@ -1,4 +1,3 @@
-from tkinter import font
 from db import crear, consultar, editar, borrar, copiar
 from gen import generator
 import pyperclip
@@ -6,83 +5,67 @@ import text2art
 from os import system, name 
 from time import sleep
 
-#nos permite limpiar la terminal al iniciar cada pantalla
 def clear():
-    #windows
     if name == 'nt':
-        _ = system('cls') #Realmente podria nombrarla como sea, pero como por defecto python usa el piso por defecto, pues...
-    #UNIX
+        system('cls')
     else:
-        _ = system('clear')
+        system('clear')
 
-
-#Menu inicial del sistema
 def menu(coleccion):
-    clear() #Primero limpiamos
-    logo = text2art("MENU", font="block")
-    print(logo)
-    print('---------------------------------------------------------------------------------------------')
-    print('¿Qué quieres hacer?')
-    print('1. Guardar nueva contraseña.')
-    print('2. Mostrar contraseñas guardadas.')
-    print('3. Modificar datos')
-    print('4. Borrar contraseña.')
-    print('5. Generar contraseña aleatoriamente')
-    print('6. Salir')
-    opcion = input('Elige tu opción: ')
-
-    #Verificamos que se haya escogido la opción correcta
-    if opcion == 0 or opcion > 6:
+    while True:  # Bucle principal en lugar de recursión
         clear()
-        print('Escoge una opción valida... -.-')
-        sleep(5)
-        menu(coleccion)
-    else:
+        logo = text2art.text2art("MENU", font="block")
+        print(logo)
+        print('-' * 80)
+        print('1. Guardar nueva contraseña')
+        print('2. Mostrar contraseñas')
+        print('3. Modificar datos')
+        print('4. Borrar contraseña')
+        print('5. Generar contraseña aleatoria')
+        print('6. Salir\n')
+
+        try:  # Manejo de errores para entrada no numérica
+            opcion = int(input('Elige tu opción (1-6): '))
+        except ValueError:
+            input('\n❌ Entrada inválida. Presiona Enter para continuar...')
+            continue
+
         if opcion == 1:
             clear()
             crear(coleccion)
-            print("Regresando al menu...")
-            sleep(5)
-            menu(coleccion)
+            input('\n✅ Contraseña guardada. Presiona Enter para continuar...')
+
         elif opcion == 2:
             clear()
             consultar(coleccion)
-            opcion = input("Qué desea hacer ahora?\n1.Volver al menú\n2.Copiar password")
-            if opcion == 1:
-                clear()
-                print("Volviendo al menú...")
-                sleep(5)
-                menu(coleccion)
-            elif opcion == 2:
+            sub_opcion = input('\n1. Volver al menú\n2. Copiar contraseña\nOpción: ')
+            
+            if sub_opcion == '2':
                 copiar(coleccion)
-                print("Regresando al menú....")
-                sleep(5)
-                menu(coleccion)
-            else:
-                clear()
-                print("Opción inválida... Regresando al menú principal")
-                menu(coleccion)
+                input('\n📋 Contraseña copiada. Presiona Enter para continuar...')
+        
         elif opcion == 3:
             clear()
             editar(coleccion)
-            print("Regresando al menu...")
-            sleep(5)
-            menu(coleccion)
+            input('\n✅ Datos modificados. Presiona Enter para continuar...')
+
         elif opcion == 4:
             clear()
             borrar(coleccion)
-            print("Regresando al menu...")
-            sleep(5)
-            menu(coleccion)
+            input('\n✅ Contraseña eliminada. Presiona Enter para continuar...')
+
         elif opcion == 5:
             clear()
             password = generator()
             pyperclip.copy(password)
-            print('Password copiado en el portapapeles.')
-            print("Regresando al menu...")
-            sleep(5)
-            menu(coleccion)
+            print(f'\n🔑 Contraseña generada: {password}')
+            input('📋 Copiada al portapapeles. Presiona Enter para continuar...')
+
         elif opcion == 6:
             clear()
-            print('Saliendo del programa...')
-            exit(5) #Si todo está bien, permite usar la opcion para escoger la siguiente pantalla
+            print(text2art.text2art("Adios!", font="cybermedium"))
+            sleep(1)
+            break  # Salir del bucle
+
+        else:  # Manejo de opciones fuera de rango
+            input('\n❌ Opción no válida. Presiona Enter para continuar...')
