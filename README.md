@@ -19,7 +19,7 @@ Gestor de contraseñas en consola con encriptación BCrypt y almacenamiento segu
 
 1. **Clonar repositorio**:
 ```bash
-git clone https://github.com/tu-usuario/MiniPassMan.git
+git clone https://github.com/pantokrator14/MiniPassMan.git
 cd MiniPassMan
 ```
 2. **Instalar dependencias**:
