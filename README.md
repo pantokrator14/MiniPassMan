@@ -21,12 +21,12 @@ Gestor de contraseñas en consola con encriptación BCrypt y almacenamiento segu
 ```bash
 git clone https://github.com/tu-usuario/MiniPassMan.git
 cd MiniPassMan
-
+```
 2. **Instalar dependencias**:
 
 ```bash
 pip install -r requirements.txt
-
+```
 3. **Configurar MongoDB Atlas**:
 
     Crear cluster gratuito en MongoDB Atlas
@@ -36,7 +36,7 @@ pip install -r requirements.txt
 ## 🖥 Uso
 ```bash
 python src/main.py
-
+```
 ## Flujo de trabajo:
 
     Ingresar credenciales de MongoDB Atlas
