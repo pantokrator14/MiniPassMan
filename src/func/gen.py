@@ -9,7 +9,7 @@ def generator():
     alfanum = '*/-_()=.,'
 
     todo = lower + upper + numero + alfanum 
-    largo = input("¿Qué tan larga quieres que sea la contraseña?: ")
+    largo = int(input("¿Qué tan larga quieres que sea la contraseña?: "))
     
     password = "".join(random.sample(todo, largo))
     print("tu contraseña es: " + password)

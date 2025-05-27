@@ -22,7 +22,7 @@ def conectar(usuario, password):
 #---------------------------------------------------------
 
 def crear(collection):    #Create data
-    opcion = input("1.Colocar mi propia contraseña \n2.Generar contraseña aleatoria automáticamente")
+    opcion = int(input("1.Colocar mi propia contraseña \n2.Generar contraseña aleatoria automáticamente"))
     if opcion == 1:
         sitio = input("Nombre del sitio web: ")
         usuario = input("Ingrese nombre de usuario: ")
@@ -72,7 +72,7 @@ def copiar(collection):
 def editar(collection):
 
     nombre = input('nombre: ')
-    filtro = {'name':nombre}
+    filtro = {'username':nombre}
     newName = input("Nuevo nombre de usuario: ")
     sitio = input('Nuevo enlace: ')
     password = getpass('NUEVO password: ')
