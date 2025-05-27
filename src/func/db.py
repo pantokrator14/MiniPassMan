@@ -4,7 +4,7 @@ import pymongo as pym
 import tabulate
 import pyperclip
 from getpass import getpass
-from gen import generator
+from gen import generator, salt
 
 
 #Change the url based on your own mongoDB database, its the only thing you have to change.
@@ -26,7 +26,7 @@ def crear(collection):    #Create data
     if opcion == 1:
         sitio = input("Nombre del sitio web: ")
         usuario = input("Ingrese nombre de usuario: ")
-        contraseña = getpass("Ingrese la contraseña: ")
+        contraseña = salt(getpass("Ingrese la contraseña: ").encode()) 
         nota = input("Ingrese una nota o descripción: ")
         respuesta = collection.insert_one({"website":sitio, "username":usuario, "password":contraseña, "descripcion":nota})
         print('Datos guardados bajo el ID: ',respuesta.inserted_id)
@@ -51,13 +51,13 @@ def consultar(collection):
     if opcion == 1:
         resultados = collection.find(projection={'_id':False}) #It seems to return all the values of the document except for the ID
         for res in resultados:
-            print(tabulate(res))
+            print(tabulate([res.values()], headers=res.keys()))
     elif opcion ==2:
         nombre = input("¿Como se llama el sitio web que busca? ")
         resultado = collection.find({"website": nombre})
         if resultado.acknowledged: #Possible bug, change if necessary
             for res in resultado:
-                print(tabulate(res))
+                print(tabulate([res.values()], headers=res.keys()))
         else:
             print("Sitio web no encontrado... Intente nuevamente.")
             consultar(collection)
@@ -87,7 +87,9 @@ def editar(collection):
 def borrar(collection):
     nombre = input("¿Como se llama el sitio web que busca? ")
     usuario = input("Ingrese el nombre de usuario respectivo: ")
-    resultado = collection.delete_one({"website": nombre, "username": usuario})
+    confirmar = input("¿Seguro que desea borrar? (s/n): ")
+    if confirmar.lower() == "s":
+        resultado = collection.delete_one({"website": nombre, "username": usuario})
 
     if resultado.acknowledged:
         print("Datos borrados con éxito!")
